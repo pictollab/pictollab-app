@@ -1,10 +1,14 @@
 <template>
-  <div class="container">
-    
-  </div>
+  <v-app>
+    <v-content>
+      <nuxt/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
+import detect from 'browser-detect'
+
 export default {
   // Do not forget this little guy
   name: '',
@@ -28,10 +32,12 @@ export default {
   methods: {},
   // component Lifecycle hooks
   beforeCreate () {},
-  mounted () {}
+  mounted () {
+    this.$store.dispatch('user/setBrowser', detect())
+  }
 }
 </script>
 
-<style scoped>
+<style>
   
 </style>

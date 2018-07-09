@@ -60,7 +60,7 @@ export const mutations = {
   // --- User consent to access camera
   USER_CONSENT ({ user }) { user.consent = true },
   // --- Client event log
-  LOG_TIMELINE_PUSH ({ log }, data) { log.timeline.push(Object.assign({ timestamp: now() }, data)) },
+  LOG_TIMELINE_PUSH ({ log }, data) { log.timeline.push(Object.assign({ timestamp: Date.now() - log.stats.connectionTime }, data)) },
   LOG_PAGE_VISIT ({ log }, page) { log.stats.pageVisits[page]++ },
   LOG_PHOTO_CAPTURE ({ log }) { log.stats.interactions.photo.captured++ },
   LOG_PHOTO_UPLOAD ({ log }) { log.stats.interactions.photo.uploaded++ },
@@ -82,15 +82,24 @@ export const actions = {
     commit('BROWSER_SET_OS', os)
   },
   // --- Vue-Socket.io actions
-  'socket/event' ({ state }, event) { this._vm.$socket.emit('event', event) },
-  'socket/register' ({ state }, data) { this._vm.$socket.emit('register', data) },
-  'socket/upload' ({ dispatch, state }, data) { this._vm.$socket.emit('upload', data) },
+  'socket/event' ({ state }, event) { 
+    if (!process.env.NODE_ENV === 'dev')
+      this._vm.$socket.emit('event', event) 
+  },
+  'socket/register' ({ state }, data) { 
+    if (!process.env.NODE_ENV === 'dev')
+      this._vm.$socket.emit('register', data) 
+  },
+  'socket/upload' ({ dispatch, state }, data) { 
+    if (!process.env.NODE_ENV === 'dev')
+      this._vm.$socket.emit('upload', data) 
+  },
   // --- Client logging
   'log/event' ({ commit, dispatch, state }, data) {
     let event
     switch (data.type) {
       case 'capture':
-        event = { type: 'capture', data: null, timestamp: { client: now() } }
+        event = { type: 'capture', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime - state.log.stats.connectionTime } }
         commit('LOG_PHOTO_CAPTURE')
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/event', event)
@@ -98,18 +107,18 @@ export const actions = {
       case 'connect':
         const { user } = state
         const { browser, id } = user
-        event = { type: 'connect', data: null, timestamp: { client: now() } }
+        event = { type: 'connect', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/register', { browser, id, log: [] })
         break
       case 'nav':
-        event = { type: 'nav', data: data.to, timestamp: { client: now() } }
+        event = { type: 'nav', data: data.to, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
         commit('LOG_PAGE_VISIT', data.to)
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/event', event)
         break
       case 'upload':
-        event = { type: 'upload', data: null, timestamp: { client: now() } }
+        event = { type: 'upload', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
         commit('LOG_PHOTO_UPLOAD')
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/upload', data.img)
