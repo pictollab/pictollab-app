@@ -15,6 +15,12 @@ module.exports = {
     ]
   },
   /*
+  ** CSS assets
+  */
+  css: [
+    '~/assets/css/cssgram.css'
+  ],
+  /*
   ** Customize the progress bar color
   */
   loading: { color: '#3B8070' },
