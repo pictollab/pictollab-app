@@ -24,6 +24,12 @@ module.exports = {
     '@nuxtjs/vuetify'
   ],
   /*
+  ** Custom js plugins
+  */
+  plugins: [
+    { src: '~/plugins/vue-socket.io.js' }
+  ],
+  /*
   ** Build configuration
   */
   build: {
