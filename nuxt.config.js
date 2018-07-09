@@ -30,6 +30,7 @@ module.exports = {
     ]
   },
   loading: { color: '#3B8070' },
+  mode: 'spa',
   modules: [
     '@nuxtjs/vuetify'
   ],
