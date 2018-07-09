@@ -34,6 +34,6 @@ module.exports = {
     '@nuxtjs/vuetify'
   ],
   plugins: [
-    { src: '~/plugins/vue-socket.io.js' }
+    { src: '~/plugins/vue-socket.io.js', ssr: false }
   ],
 }
