@@ -96,7 +96,7 @@ export const actions = {
     let event
     switch (data.type) {
       case 'capture':
-        event = { type: 'capture', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime - state.log.stats.connectionTime } }
+        event = { type: 'capture', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
         commit('LOG_PHOTO_CAPTURE')
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/event', event)
@@ -121,6 +121,7 @@ export const actions = {
         dispatch('socket/upload', data.img)
         break
     }
+    console.log(state.log)
   }
 }
 

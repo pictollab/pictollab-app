@@ -6,7 +6,7 @@
     <v-btn large fab class="camera" @click.stop="capture">
       <v-icon large>camera</v-icon>
     </v-btn>
-    <v-btn fab class="data" nuxt to="/DEBUG/data">
+    <v-btn fab class="data" nuxt to="/data">
       <v-icon>bar_chart</v-icon>
     </v-btn>
     <v-speed-dial v-model="fab" direction="top" class="fab">

@@ -75,11 +75,9 @@ export default {
       switch (direction) {
         case 'L':
           this.$store.commit('FILTER_NEXT')
-          this.$store.commit('SYNTH_PRESET_NEXT')
           break
         case 'R':
           this.$store.commit('FILTER_PREV')
-          this.$store.commit('SYNTH_PRESET_PREV')
           break
       }
     }
