@@ -47,11 +47,11 @@ export default {
   methods: {
     accept () {
       this.$store.dispatch('log/event', {
-        type: 'capture'
-      })
-      this.$store.dispatch('socket/upload', {
-        base64: this.$refs.canvas.toDataURL(),
-        class: this.$store.getters.filter
+        type: 'upload',
+        img: {
+          base64: this.$refs.canvas.toDataURL(),
+          class: this.$store.getters.filter
+        }
       })
       this.$emit('close')
     },

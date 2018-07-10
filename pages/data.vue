@@ -1,11 +1,12 @@
 <template>
   <v-flex xs12>
-    <v-toolbar>
-      <v-spacer/>
-      <v-btn flat icon nuxt to="/app">
-        <v-icon>forward_arrow</v-icon>
-      </v-btn>
-    </v-toolbar>
+  <v-toolbar>
+    <v-toolbar-title>Data</v-toolbar-title>
+    <v-spacer/>
+    <v-btn icon nuxt to="/app">
+      <v-icon>arrow_forward_ios</v-icon>
+    </v-btn>
+  </v-toolbar>
 
     <v-list dense subheader>
       <v-subheader>

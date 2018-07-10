@@ -1,26 +1,19 @@
-import CircularBuffer from '~/assets/js/utils/CircularBuffer'
+// import CircularBuffer from '~/assets/js/utils/CircularBuffer'
 
 export const state = () => ({
-  feed: new CircularBuffer(5),
+  feed: [],
   filter: {
     active: 0,
-    list: [
-      '',
-      '_1977',
-      'gingham',
-      'moon',
-      'nashville',
-      'valencia'
-    ]
+    list: [ '', '_1977', 'gingham', 'moon', 'nashville', 'valencia' ]
   },
   log: {
     stats: {
       connectionTime: Date.now(),
       pageVisits: {
         '/': 0,
-        '/camera': 0,
+        '/app': 0,
         '/feed': 0,
-        '/canvas': 0,
+        '/art': 0,
         '/data': 0
       },
       interactions: {
@@ -52,6 +45,8 @@ export const mutations = {
   // --- CSSGram filter
   FILTER_NEXT ({ filter }) { filter.active = ++filter.active % filter.list.length },
   FILTER_PREV ({ filter }) { filter.active = (--filter.active + filter.list.length) % filter.list.length },
+  // --- Client image feed
+  FEED_PUSH ({ feed }, data) { feed.push(data) },
   // --- Client event log
   LOG_TIMELINE_PUSH ({ log }, data) { log.timeline.push(Object.assign({ timestamp: Date.now() - log.stats.connectionTime }, data)) },
   LOG_PAGE_VISIT ({ log }, page) { log.stats.pageVisits[page]++ },
@@ -60,7 +55,7 @@ export const mutations = {
   LOG_VIDEO_CAPTURE ({ log }) { log.stats.interactions.video.captured++ },
   LOG_VIDEO_UPLOAD ({ log }) { log.stats.interactions.video.uploaded++ },
   // --- Vue-Socket.io bindings
-  SOCKET_FEED_UPDATE ({ feed }, data) { feed.push(data[0]) },
+  // SOCKET_FEED_UPDATE ({ feed }, data) { feed.push(data[0]) },
   SOCKET_MONDRIAN_UPDATE ({ mondrian }, data) { },
   SOCKET_SET_ID ({ user }, id) { user.id = id[0] }
 }
@@ -76,16 +71,16 @@ export const actions = {
   },
   // --- Vue-Socket.io actions
   'socket/event' ({ state }, event) { 
-    if (!process.env.NODE_ENV === 'dev')
-      this._vm.$socket.emit('event', event) 
+    try { this._vm.$socket.emit('event', event) }
+    catch(e) { console.log(e) }
   },
   'socket/register' ({ state }, data) { 
-    if (!process.env.NODE_ENV === 'dev')
-      this._vm.$socket.emit('register', data) 
+    try { this._vm.$socket.emit('register', data) }
+    catch(e) { console.log(e) }
   },
   'socket/upload' ({ dispatch, state }, data) { 
-    if (!process.env.NODE_ENV === 'dev')
-      this._vm.$socket.emit('upload', data) 
+    try { this._vm.$socket.emit('upload', data) }
+    catch(e) { console.log(e) }
   },
   // --- Client logging
   'log/event' ({ commit, dispatch, state }, data) {
@@ -114,10 +109,10 @@ export const actions = {
         event = { type: 'upload', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
         commit('LOG_PHOTO_UPLOAD')
         commit('LOG_TIMELINE_PUSH', event)
+        commit('FEED_PUSH', data.img)
         dispatch('socket/upload', data.img)
         break
     }
-    console.log(state.log)
   }
 }
 
