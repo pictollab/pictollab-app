@@ -21,14 +21,10 @@ export const state = () => ({
         '/camera': 0,
         '/feed': 0,
         '/canvas': 0,
-        '/DEBUG/data': 0
+        '/data': 0
       },
       interactions: {
         photo: {
-          captured: 0,
-          uploaded: 0
-        },
-        video: {
           captured: 0,
           uploaded: 0
         }
