@@ -5,6 +5,7 @@
   "author": "Andrew Thompson <andrew.thompson@qmul.ac.uk>",
   "private": true,
   "scripts": {
+    "dev-local": "cross-env NODE_ENV=dev_local nuxt",
     "dev": "cross-env NODE_ENV=dev nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
