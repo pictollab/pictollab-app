@@ -36,5 +36,5 @@ module.exports = {
   ],
   plugins: [
     { src: '~/plugins/vue-socket.io.js', ssr: false }
-  ],
+  ]
 }

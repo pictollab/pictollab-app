@@ -9,9 +9,18 @@
     <v-btn fab class="data" nuxt to="/DEBUG/data">
       <v-icon>bar_chart</v-icon>
     </v-btn>
-    <v-btn fab class="feed" nuxt to="/feed">
-      <v-icon>photo_library</v-icon>
-    </v-btn>
+    <v-speed-dial v-model="fab" direction="top" class="fab">
+      <v-btn v-model="fab" fab slot="activator" class="fab-activator">
+        <v-icon>photo_library</v-icon>
+        <v-icon>close</v-icon>
+      </v-btn>
+      <v-btn fab nuxt to="/feed">
+        <v-icon>photo_album</v-icon>
+      </v-btn>
+      <v-btn fab nuxt to="/art">
+        <v-icon>brush</v-icon>
+      </v-btn>
+    </v-speed-dial>
   </div>
 </template>
 
@@ -27,7 +36,9 @@ export default {
   props: [ 'muted' ],
   // variables
   data () {
-    return { }
+    return { 
+      fab: false
+    }
   },
   computed: {},
   // when component uses other components
@@ -63,7 +74,7 @@ export default {
   bottom: 5%;
 }
 
-#picto-app-controls .feed {
+#picto-app-controls .fab {
   position: absolute;
   left: 75vw; 
   right: 0;
@@ -71,6 +82,7 @@ export default {
   margin-right: auto; 
   bottom: 2.5%;
 }
+
 
 #picto-app-controls .data {
   position: absolute;

@@ -43,7 +43,6 @@ export const state = () => ({
       isMobile: false,
       OS: ''
     },
-    consent: false,
     id: null
   }
 })
@@ -57,8 +56,6 @@ export const mutations = {
   // --- CSSGram filter
   FILTER_NEXT ({ filter }) { filter.active = ++filter.active % filter.list.length },
   FILTER_PREV ({ filter }) { filter.active = (--filter.active + filter.list.length) % filter.list.length },
-  // --- User consent to access camera
-  USER_CONSENT ({ user }) { user.consent = true },
   // --- Client event log
   LOG_TIMELINE_PUSH ({ log }, data) { log.timeline.push(Object.assign({ timestamp: Date.now() - log.stats.connectionTime }, data)) },
   LOG_PAGE_VISIT ({ log }, page) { log.stats.pageVisits[page]++ },
