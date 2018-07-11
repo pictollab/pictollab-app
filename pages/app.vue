@@ -64,7 +64,11 @@ export default {
         this.$refs.camera.play()
       }
     },
-    muted () {}
+    muted () {
+      this.muted 
+        ? this.$store.dispatch('audio/mute')
+        : this.$store.dispatch('audio/unmute')
+    }
   },
   methods: {
     analyse () {},
@@ -93,10 +97,10 @@ export default {
           this.stream = stream
           this.$refs.camera.srcObject = this.stream
           this.timeoutID = setTimeout(() => this.analyse(), 1000)
-          if (!AudioEngine.active()) {
-            AudioEngine.init()
+          if (!this.$store.getters.audio.active()) {
+            this.$store.dispatch('audio/init')
           } else {
-            AudioEngine.resume()
+            this.$store.dispatch('audio/resume')
           }
         })
         .catch(error => console.log(error))
@@ -111,8 +115,8 @@ export default {
         .getTracks()
         .forEach(track => track.stop())
     }
-    if (AudioEngine.active()) {
-      AudioEngine.pause()
+    if (this.$store.getters.audio.active()) {
+      this.$store.dispatch('audio/pause')
     }
   }
 }

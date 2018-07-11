@@ -1,4 +1,5 @@
 // import CircularBuffer from '~/assets/js/utils/CircularBuffer'
+import AudioEngine from '~/assets/js/audio/base'
 
 export const state = () => ({
   feed: [],
@@ -61,6 +62,28 @@ export const mutations = {
 }
 
 export const actions = {
+  // --- Audio Engine actions
+  'audio/init' ({ dispatch}) {
+    AudioEngine.init()
+  },
+  'audio/mute' ({ dispatch }) {
+    AudioEngine.mute()
+  },
+  'audio/unmute' ({ dispatch }) {
+    AudioEngine.unmute()
+  },
+  'audio/pause' ({ dispatch }) {
+    AudioEngine.pause()
+  },
+  'audio/resume' ({ dispatch }) {
+    AudioEngine.resume()
+  },
+  'audio/nextPreset' ({ dispatch }) {
+    AudioEngine.nextPreset()
+  },
+  'audio/prevPreset' ({ dispatch }) {
+    AudioEngine.prevPreset()
+  },
   // --- User actions
   'user/consent' ({ commit }) { commit('USER_CONSENT') },
   'user/setBrowser' ({ commit }, { name, version, mobile, os }) {
@@ -71,16 +94,13 @@ export const actions = {
   },
   // --- Vue-Socket.io actions
   'socket/event' ({ state }, event) { 
-    try { this._vm.$socket.emit('event', event) }
-    catch(e) { console.log(e) }
+    try { this._vm.$socket.emit('event', event) } catch(e) { console.log(e) }
   },
   'socket/register' ({ state }, data) { 
-    try { this._vm.$socket.emit('register', data) }
-    catch(e) { console.log(e) }
+    try { this._vm.$socket.emit('register', data) } catch(e) { console.log(e) }
   },
   'socket/upload' ({ dispatch, state }, data) { 
-    try { this._vm.$socket.emit('upload', data) }
-    catch(e) { console.log(e) }
+    try { this._vm.$socket.emit('upload', data) } catch(e) { console.log(e) }
   },
   // --- Client logging
   'log/event' ({ commit, dispatch, state }, data) {
@@ -117,5 +137,6 @@ export const actions = {
 }
 
 export const getters = {
-  filter: ({ filter }) => filter.list[filter.active]
+  filter: ({ filter }) => filter.list[filter.active],
+  audio: () => AudioEngine
 }
