@@ -25,6 +25,8 @@ import PictoAppPreview from '~/components/PictoApp/Preview'
 
 import AudioEngine from '~/assets/js/audio/base'
 
+import analyseImage from '~/assets/js/image/analyse'
+
 export default {
   // Do not forget this little guy
   name: '',
@@ -71,7 +73,12 @@ export default {
     }
   },
   methods: {
-    analyse () {},
+    analyse () {
+      const rgb = analyseImage(document.querySelector('video'))
+
+      this.$store.dispatch('audio/rgb', rgb)
+      this.timeoutID = setTimeout(() => this.analyse(), 1000)
+    },
     capture () {
       this.preview = true
       this.$store.dispatch('log/event', { type: 'capture' })
@@ -81,9 +88,11 @@ export default {
       switch (direction) {
         case 'L':
           this.$store.commit('FILTER_NEXT')
+          this.$store.dispatch('audio/nextPreset')
           break
         case 'R':
           this.$store.commit('FILTER_PREV')
+          this.$store.dispatch('audio/prevPreset')
           break
       }
     }

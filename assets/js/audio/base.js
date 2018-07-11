@@ -3,6 +3,8 @@ import Tuna from 'tunajs'
 import presets from './presets'
 import synth from './synth'
 
+import ObjectSort from '../utils/ObjectSort'
+
 export default {
   // --- Private vars
   _active: false,
@@ -38,5 +40,24 @@ export default {
   prevPreset () { 
     this._preset = (--this._preset + presets.length) % presets.length 
     this._synth.updatePreset(this._preset)
+  },
+  mapRGB (rgb) {
+    const { r, g ,b } = rgb
+    const sorted = ObjectSort.largest(rgb)
+    const gain = [ r / 255, r / 255, g / 255, b / 255 ]
+    const chord = sorted[0] === 'brightness'
+      ? sorted[1] === 'r'
+        ? 0
+        : sorted[1] === 'b'
+          ? 1
+          : 2
+      : sorted[0] === 'r'
+        ? 0
+        : sorted[0] === 'b'
+          ? 1
+          : 2
+
+    this._synth.updateGain(gain)
+    this._synth.updateNote(chord)
   }
 }

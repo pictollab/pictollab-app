@@ -84,6 +84,9 @@ export const actions = {
   'audio/prevPreset' ({ dispatch }) {
     AudioEngine.prevPreset()
   },
+  'audio/rgb' ({ dispatch }, rgb) {
+    AudioEngine.mapRGB(rgb)
+  },
   // --- User actions
   'user/consent' ({ commit }) { commit('USER_CONSENT') },
   'user/setBrowser' ({ commit }, { name, version, mobile, os }) {
