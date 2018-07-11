@@ -23,6 +23,8 @@
 import PictoAppControls from '~/components/PictoApp/Controls'
 import PictoAppPreview from '~/components/PictoApp/Preview'
 
+import AudioEngine from '~/assets/js/audio/base'
+
 export default {
   // Do not forget this little guy
   name: '',
@@ -91,6 +93,11 @@ export default {
           this.stream = stream
           this.$refs.camera.srcObject = this.stream
           this.timeoutID = setTimeout(() => this.analyse(), 1000)
+          if (!AudioEngine.active()) {
+            AudioEngine.init()
+          } else {
+            AudioEngine.resume()
+          }
         })
         .catch(error => console.log(error))
     }
@@ -103,6 +110,9 @@ export default {
       this.stream
         .getTracks()
         .forEach(track => track.stop())
+    }
+    if (AudioEngine.active()) {
+      AudioEngine.pause()
     }
   }
 }
