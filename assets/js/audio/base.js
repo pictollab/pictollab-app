@@ -35,7 +35,7 @@ export default {
     this._synth.init(this._context)
 
     this._effects = effects
-    this._effects.init(this._context, this._tone)
+    this._effects.init(this._context)
 
     this._synth.connect(this._effects.input())
     this._effects.connect(this._output)

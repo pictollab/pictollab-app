@@ -11,8 +11,7 @@ export default {
   _preset: null,
   _output: null,
   // --- Public methods
-  init (context, tone, preset = 0) {
-    this._tone = tone
+  init (context, preset = 0) {
     this._context = context
     this._preset = presets[preset].effects
 

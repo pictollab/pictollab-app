@@ -1,36 +1,42 @@
-import Voice from './voice'
+import Tone from 'tone'
+import presets from './presets'
 
 export default {
   // --- Private vars
   _context: null,
-  _voices: [],
-  _mixer: null,
+  _synth: null,
+  _output: null,
+  _preset: null,
+  _chord: null,
   // --- Public methods
-  init (context, preset) {
+  init (context, preset = 0) {
     this._context = context
+    this._preset = presets[preset].synth
 
-    this._mixer = this._context.createGain()
-    this._mixer.gain.value = 0.25
+    this._output = this._context.createGain()
+    this._output.gain.value = 0.75
 
-    for (let i = 0; i < 4; i++) {
-      this._voices.push(new Voice(this._context, i, preset))
-      this._voices[i].connect(this._mixer)
-    }
+    this._synth = new Tone.PolySynth(8, Tone.Synth)
+    this._synth.set(this._preset.params)
+    this._synth.connect(this._output)
   },
-  connect (node) { this._mixer.connect(node) },
+  connect (node) { 
+    this._output.connect(node) 
+  },
   updatePreset (preset) {
-    for (let i = 0; i < 4; i++) {
-      this._voices[i].updatePreset(preset)
-    }
+    this._preset = presets[preset].synth
+    this._synth.set(this._preset)
   },
   updateGain (gain) {
     for (let i = 0; i < 4; i++) {
-      this._voices[i].updateGain(gain[i])
+      this._synth.voices[i].volume.linearRampTo(gain[i], 0.9)
     }
   },
-  updateNote (note) {
-    for (let i = 0; i < 4; i++) {
-      this._voices[i].updateNote(note)
+  updateNote (chord) {
+    if (this._chord !== this._preset.notes[chord]) {
+      this._synth.triggerRelease(this._chord)
+      this._chord = this._preset.notes[chord]
+      this._synth.triggerAttack(this._chord)
     }
   }
 }
