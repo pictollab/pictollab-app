@@ -14,7 +14,7 @@ export default {
     this._preset = presets[preset].synth
 
     this._output = this._context.createGain()
-    this._output.gain.value = 0.75
+    this._output.gain.value = 0.5
 
     this._synth = new Tone.PolySynth(8, Tone.Synth)
     this._synth.set(this._preset.params)

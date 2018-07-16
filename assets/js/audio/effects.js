@@ -16,14 +16,14 @@ export default {
     this._preset = presets[preset].effects
 
     this._input = this._context.createGain()
-    this._input.gain.value = 0.75
+    this._input.gain.value = 0.5
 
     this._preset.forEach(fx => {
       this._chain.push(new Tone[fx.type](fx.params))
     })
 
     this._output = this._context.createGain()
-    this._output.gain.value = 0.75
+    this._output.gain.value = 0.5
 
     this._input.connect(this._chain[0])
     for (let i = 0; i < this._chain.length; i++) {
@@ -38,7 +38,7 @@ export default {
   updatePreset (preset) {
     this._preset = presets[preset].effects
     this._chain.forEach((fx, i) => {
-      fx.wet.value = this._preset[i].params.wet
+      fx.wet.exponentialRampTo(this._preset[i].params.wet, 1)
     })
   }
 }

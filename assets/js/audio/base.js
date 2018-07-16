@@ -26,10 +26,8 @@ export default {
     this._context = this._tone.context
 
     this._output = this._context.createGain()
-    this._output.gain.value = 0.75
+    this._output.gain.value = 0.5
     this._output.connect(this._context.destination)
-
-    console.log(this._output.gain.value)
 
     this._synth = synth
     this._synth.init(this._context)
