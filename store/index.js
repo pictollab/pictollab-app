@@ -140,6 +140,6 @@ export const actions = {
 }
 
 export const getters = {
-  filter: ({ filter }) => filter.list[filter.active],
-  audio: () => AudioEngine
+  audio: () => AudioEngine,
+  filter: ({ filter }) => filter.list[filter.active]
 }

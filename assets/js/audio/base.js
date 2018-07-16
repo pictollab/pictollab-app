@@ -1,7 +1,8 @@
-import Tuna from 'tunajs'
+import Tone from 'tone'
 
 import presets from './presets'
 import synth from './synth'
+import effects from './effects'
 
 import ObjectSort from '../utils/ObjectSort'
 
@@ -12,27 +13,35 @@ export default {
   _output: null,
   _preset: 0,
   _synth: null,
-  _tuna: null,
+  _effects: null,
+  _tone: null,
   // --- Public Methods
+  mute () { this._output.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1) },
+  unmute () { this._output.gain.linearRampToValueAtTime(0.75, this._context.currentTime + 0.1) },
+  pause () { this._context.suspend() },
+  resume () { this._context.resume() },
+  isActive () { return this._active },
   init () {
-    this._context = new AudioContext()
-    this._tuna = new Tuna(this._context)
+    this._tone = new Tone()
+    this._context = this._tone.context
 
     this._output = this._context.createGain()
     this._output.gain.value = 0.75
     this._output.connect(this._context.destination)
 
+    console.log(this._output.gain.value)
+
     this._synth = synth
     this._synth.init(this._context)
-    this._synth.connect(this._output)
+
+    this._effects = effects
+    this._effects.init(this._context, this._tone)
+
+    this._synth.connect(this._effects.input())
+    this._effects.connect(this._output)
 
     this._active = true
   },
-  mute () { this._output.gain.value = 0 },
-  unmute () { this._output.gain.value = 0.75 },
-  pause () { this._context.suspend() },
-  resume () { this._context.resume() },
-  active () { return this._active },
   nextPreset () { 
     this._preset = ++this._preset % presets.length 
     this._synth.updatePreset(this._preset)

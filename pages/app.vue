@@ -106,7 +106,7 @@ export default {
           this.stream = stream
           this.$refs.camera.srcObject = this.stream
           this.timeoutID = setTimeout(() => this.analyse(), 1000)
-          if (!this.$store.getters.audio.active()) {
+          if (!this.$store.getters.audio.isActive()) {
             this.$store.dispatch('audio/init')
           } else {
             this.$store.dispatch('audio/resume')
@@ -124,7 +124,7 @@ export default {
         .getTracks()
         .forEach(track => track.stop())
     }
-    if (this.$store.getters.audio.active()) {
+    if (this.$store.getters.audio.isActive()) {
       this.$store.dispatch('audio/pause')
     }
   }

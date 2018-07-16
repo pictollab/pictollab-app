@@ -20,6 +20,7 @@ export default class Voice {
     this._osc.frequency.value = this._preset.notes[0]
  
     this._gain = this._context.createGain()
+    this._gain.gain.value = 0
 
     this._osc.connect(this._gain)
     this._osc.start()
@@ -36,7 +37,7 @@ export default class Voice {
       .linearRampToValueAtTime(gain, t)
   }
   updateNote (note) { 
-    const t = this._context.currentTime + 0.01
+    const t = this._context.currentTime + 0.1
     this._osc
       .frequency
       .exponentialRampToValueAtTime(this._preset.notes[note], t)
