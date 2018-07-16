@@ -66,9 +66,11 @@ export default {
       switch (direction) {
         case 'L':
           this.$store.commit('FILTER_NEXT')
+          this.$store.dispatch('audio/nextPreset')
           break
         case 'R':
           this.$store.commit('FILTER_PREV')
+          this.$store.dispatch('audio/prevPreset')
           break
       }
     }
