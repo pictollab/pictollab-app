@@ -19,8 +19,7 @@ export default {
     this._input.gain.value = 0.75
 
     this._preset.forEach(fx => {
-      if (!fx.bypass) 
-        this._chain.push(new Tone[fx.type](fx.params))
+      this._chain.push(new Tone[fx.type](fx.params))
     })
 
     this._output = this._context.createGain()
@@ -35,5 +34,11 @@ export default {
     this._chain[this._chain.length - 1].connect(this._output)
   },
   connect (node) { this._output.connect(node) },
-  input () { return this._input }
+  input () { return this._input },
+  updatePreset (preset) {
+    this._preset = presets[preset].effects
+    this._chain.forEach((fx, i) => {
+      fx.wet.value = this._preset[i].params.wet
+    })
+  }
 }

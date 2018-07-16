@@ -45,10 +45,12 @@ export default {
   nextPreset () { 
     this._preset = ++this._preset % presets.length 
     this._synth.updatePreset(this._preset)
+    this._effects.updatePreset(this._preset)
   },
   prevPreset () { 
     this._preset = (--this._preset + presets.length) % presets.length 
     this._synth.updatePreset(this._preset)
+    this._effects.updatePreset(this._preset)
   },
   mapRGB (rgb) {
     const { r, g ,b } = rgb
