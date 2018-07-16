@@ -7,12 +7,12 @@ export default {
     ],
     params: {
       "oscillator": {
-        "type": "sine"
+        "type": "triangle"
       },
       "envelope": {
         "attack": 0.001,
         "decay": 0.1,
-        "sustain": 0.1,
+        "sustain": 1,
         "release": 1.2
       }
     }

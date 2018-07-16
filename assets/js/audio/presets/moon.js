@@ -12,7 +12,7 @@ export default {
       "envelope": {
         "attack": 0.001,
         "decay": 1.2,
-        "sustain": 0,
+        "sustain": 1,
         "release": 1.2
       }
     }

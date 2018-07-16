@@ -25,7 +25,7 @@ export default {
   },
   updatePreset (preset) {
     this._preset = presets[preset].synth
-    this._synth.set(this._preset)
+    this._synth.set(this._preset.params)
   },
   updateGain (gain) {
     for (let i = 0; i < 4; i++) {
