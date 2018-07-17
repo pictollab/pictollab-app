@@ -64,28 +64,36 @@ export const mutations = {
 export const actions = {
   // --- Audio Engine actions
   'audio/init' ({ dispatch}) {
-    AudioEngine.init()
+    if (AudioEngine.isActive())
+      AudioEngine.init()
   },
   'audio/mute' ({ dispatch }) {
-    AudioEngine.mute()
+    if (AudioEngine.isActive())
+      AudioEngine.mute()
   },
   'audio/unmute' ({ dispatch }) {
-    AudioEngine.unmute()
+    if (AudioEngine.isActive())
+      AudioEngine.unmute()
   },
   'audio/pause' ({ dispatch }) {
-    AudioEngine.pause()
+    if (AudioEngine.isActive())
+      AudioEngine.pause()
   },
   'audio/resume' ({ dispatch }) {
-    AudioEngine.resume()
+    if (AudioEngine.isActive())
+      AudioEngine.resume()
   },
   'audio/nextPreset' ({ dispatch }) {
-    AudioEngine.nextPreset()
+    if (AudioEngine.isActive())
+      AudioEngine.nextPreset()
   },
   'audio/prevPreset' ({ dispatch }) {
-    AudioEngine.prevPreset()
+    if (AudioEngine.isActive())
+      AudioEngine.prevPreset()
   },
   'audio/rgb' ({ dispatch }, rgb) {
-    AudioEngine.mapRGB(rgb)
+    if (AudioEngine.isActive())
+      AudioEngine.mapRGB(rgb)
   },
   // --- User actions
   'user/consent' ({ commit }) { commit('USER_CONSENT') },
