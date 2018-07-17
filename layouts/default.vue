@@ -36,11 +36,11 @@ export default {
     this.$store.dispatch('user/setBrowser', detect())
 
     window.addEventListener('blur', () => {
-      this.$store.dispatch('audio/mute')
+      this.$store.dispatch('audio/pause')
     }, false)
 
     window.addEventListener('focus', () => {
-      this.$store.dispatch('audio/unmute')
+      this.$store.dispatch('audio/resume')
     }, false)
   }
 }
