@@ -3,10 +3,6 @@
     <v-btn fab class="back" nuxt to="/app">
       <v-icon large>keyboard_backspace</v-icon>
     </v-btn>
-
-    <v-btn fab class="mute" @click.stop="mute">
-      <v-icon>{{ muted ? 'volume_up' : 'volume_off' }}</v-icon>
-    </v-btn>
   </div>
 </template>
 
@@ -19,7 +15,7 @@ export default {
   // compose new components
   extends: {},
   // component properties/variables
-  props: [ 'muted' ],
+  props: [],
   // variables
   data () {
     return {
@@ -31,9 +27,7 @@ export default {
   components: {},
   // methods
   watch: {},
-  methods: {
-    mute () { this.$emit('mute') }
-  },
+  methods: {},
   // component Lifecycle hooks
   beforeCreate () {},
   mounted () {}
@@ -51,15 +45,6 @@ export default {
   right: 75vw; 
   margin-left: auto; 
   margin-right: auto; 
-  top: 2.5%;
-}
-
-#picto-feed-controls .mute {
-  position: fixed;
-  left: 75vw;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
   top: 2.5%;
 }
 </style>
