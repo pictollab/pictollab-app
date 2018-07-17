@@ -1,9 +1,9 @@
 export default {
   synth: {
     notes: [
-      [ 'G1', 'G2', 'D4', 'B4' ],
-      [ 'A2', 'A3', 'D4', 'C#5' ],
-      [ 'D3', 'D4', 'D4', 'F#5' ]
+      [ 'A2', 'E2', 'C3', 'G3' ],
+      [ 'A2', 'E2', 'C3', 'F3' ],
+      [ 'A2', 'F2', 'C3', 'F3' ]
     ],
     params: {
       "oscillator": {

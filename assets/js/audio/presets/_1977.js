@@ -2,8 +2,8 @@ export default {
   synth: {
     notes: [
       [ 'G1', 'G2', 'D4', 'B4' ],
-      [ 'A2', 'A3', 'D4', 'C#5' ],
-      [ 'D3', 'D4', 'D4', 'F#5' ]
+      [ 'A2', 'G3', 'D4', 'B#5' ],
+      [ 'A3', 'A4', 'D4', 'C#5' ]
     ],
     params: {
       "oscillator" : {
@@ -12,10 +12,10 @@ export default {
         "spread" : 30
       },
       "envelope": {
-        "attack": 0.01,
+        "attack": 3,
         "decay": 0.1,
         "sustain": 1,
-        "release": 0.4,
+        "release": 1,
         "attackCurve" : "exponential"
       }
     }
@@ -47,7 +47,7 @@ export default {
         feedback: 0.4
     }},
     { type: 'Freeverb', params: {
-        wet: 1,
+        wet: 0.5,
         roomSize: 0.95,
         dampening: 1200
     }}

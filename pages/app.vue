@@ -77,7 +77,7 @@ export default {
       const rgb = analyseImage(document.querySelector('video'))
 
       this.$store.dispatch('audio/rgb', rgb)
-      this.timeoutID = setTimeout(() => this.analyse(), 1000)
+      this.timeoutID = setTimeout(() => this.analyse(), 500)
     },
     capture () {
       this.preview = true
@@ -105,7 +105,7 @@ export default {
         .then(stream => {
           this.stream = stream
           this.$refs.camera.srcObject = this.stream
-          this.timeoutID = setTimeout(() => this.analyse(), 1000)
+          this.timeoutID = setTimeout(() => this.analyse(), 500)
           if (!this.$store.getters.audio.isActive()) {
             this.$store.dispatch('audio/init')
           } else {

@@ -1,9 +1,9 @@
 export default {
   synth: {
     notes: [
-      [ 'G1', 'G2', 'D4', 'B4' ],
-      [ 'A2', 'A3', 'D4', 'C#5' ],
-      [ 'D3', 'D4', 'D4', 'F#5' ]
+      [ 'C3', 'E3', 'G3', 'C4' ],
+      [ 'C3', 'E3', 'G3', 'B4' ],
+      [ 'C3', 'E3', 'F3', 'C4' ]
     ],
     params: {
       "portamento" : 0.0,

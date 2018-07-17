@@ -1,9 +1,9 @@
 export default {
   synth: {
     notes: [
-      [ 'G1', 'G2', 'D4', 'B4' ],
-      [ 'A2', 'A3', 'D4', 'C#5' ],
-      [ 'D3', 'D4', 'D4', 'F#5' ]
+      [ 'D3', 'D4', 'D4', 'F#5' ],
+      [ 'C#3', 'C#4', 'D4', 'E5' ],
+      [ 'B3', 'B4', 'D4', 'D5' ]
     ],
     params: {
       "oscillator": {
@@ -13,7 +13,7 @@ export default {
       	"count" : 3
       },
       "envelope": {
-        "attack": 0.001,
+        "attack": 1,
         "decay": 1.6,
         "sustain": 1,
         "release": 1.6
@@ -29,7 +29,7 @@ export default {
       feedback: 0.5 
   }},
   { type: 'Vibrato', params: {
-      wet: 0, 
+      wet: 0.3, 
       frequency: 2.3, 
       depth: 0.4, 
       type: 'triangle'
@@ -42,12 +42,12 @@ export default {
       type: 'sine' 
   }},
   { type: 'FeedbackDelay', params: {
-      wet: 1,
+      wet: 0.5,
       delayTime: '8n', 
       feedback: 0.4
   }},
   { type: 'Freeverb', params: {
-      wet: 1,
+      wet: 0.75,
       roomSize: 0.95,
       dampening: 1200
   }}
