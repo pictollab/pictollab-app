@@ -64,8 +64,7 @@ export const mutations = {
 export const actions = {
   // --- Audio Engine actions
   'audio/init' ({ dispatch}) {
-    if (AudioEngine.isActive())
-      AudioEngine.init()
+    AudioEngine.init()
   },
   'audio/mute' ({ dispatch }) {
     if (AudioEngine.isActive())
