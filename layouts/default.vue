@@ -34,6 +34,14 @@ export default {
   beforeCreate () {},
   mounted () {
     this.$store.dispatch('user/setBrowser', detect())
+
+    window.addEventListener('blur', () => {
+      this.$store.dispatch('audio/mute')
+    }, false)
+
+    window.addEventListener('focus', () => {
+      this.$store.dispatch('audio/unmute')
+    }, false)
   }
 }
 </script>
