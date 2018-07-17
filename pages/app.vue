@@ -109,7 +109,7 @@ export default {
           if (!this.$store.getters.audio.isActive()) {
             this.$store.dispatch('audio/init')
           } else {
-            this.$store.dispatch('audio/resume')
+            this.$store.dispatch('audio/unmute')
           }
         })
         .catch(error => console.log(error))
@@ -125,7 +125,7 @@ export default {
         .forEach(track => track.stop())
     }
     if (this.$store.getters.audio.isActive()) {
-      this.$store.dispatch('audio/pause')
+      this.$store.dispatch('audio/mute')
     }
   }
 }
