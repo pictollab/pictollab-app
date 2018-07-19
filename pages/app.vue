@@ -14,7 +14,7 @@
     <picto-app-controls
       :muted="muted"
       v-on:capture="capture"
-      v-on:mute="mute"
+      v-on:mute="muted = !muted"
     />
   </v-layout>
 </template>
@@ -59,6 +59,11 @@ export default {
   },
   // methods
   watch: {
+    muted () {
+      this.muted 
+        ? this.$store.dispatch('audio/mute')
+        : this.$store.dispatch('audio/unmute')
+    },
     preview () {
       if (this.preview) {
         this.$refs.camera.pause()
@@ -90,11 +95,6 @@ export default {
           this.$store.dispatch('audio/prevPreset')
           break
       }
-    },
-    mute () {
-      this.muted 
-        ? this.$store.dispatch('audio/mute')
-        : this.$store.dispatch('audio/unmute')
     }
   },
   // component Lifecycle hooks
