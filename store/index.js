@@ -74,6 +74,14 @@ export const actions = {
     if (AudioEngine.isActive())
       AudioEngine.unmute()
   },
+  'audio/blur' ({ dispatch }) {
+    if (AudioEngine.isActive())
+      AudioEngine.blur()
+  },
+  'audio/focus' ({ dispatch }) {
+    if (AudioEngine.isActive())
+      AudioEngine.focus()
+  },
   'audio/pause' ({ dispatch }) {
     if (AudioEngine.isActive())
       AudioEngine.pause()

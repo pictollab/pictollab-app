@@ -15,12 +15,22 @@ export default {
   _synth: null,
   _effects: null,
   _tone: null,
+  _muted: false,
   // --- Public Methods
-  mute () { this._output.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1) },
-  unmute () { this._output.gain.linearRampToValueAtTime(0.75, this._context.currentTime + 0.1) },
+  mute () { 
+    this._muted = true
+    this._output.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1) 
+  },
+  unmute () { 
+    this._muted = false
+    this._output.gain.linearRampToValueAtTime(0.75, this._context.currentTime + 0.1) 
+  },
   pause () { this._context.suspend() },
   resume () { this._context.resume() },
+  blur () { this._output.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1)  },
+  focus () { this._output.gain.linearRampToValueAtTime(0.75, this._context.currentTime + 0.1) },
   isActive () { return this._active },
+  isMuted () { return this._muted },
   init () {
     this._tone = new Tone()
     this._context = this._tone.context

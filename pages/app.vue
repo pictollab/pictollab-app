@@ -14,7 +14,7 @@
     <picto-app-controls
       :muted="muted"
       v-on:capture="capture"
-      v-on:mute="muted = !muted"
+      v-on:mute="mute"
     />
   </v-layout>
 </template>
@@ -65,11 +65,6 @@ export default {
       } else {
         this.$refs.camera.play()
       }
-    },
-    muted () {
-      this.muted 
-        ? this.$store.dispatch('audio/mute')
-        : this.$store.dispatch('audio/unmute')
     }
   },
   methods: {
@@ -95,21 +90,29 @@ export default {
           this.$store.dispatch('audio/prevPreset')
           break
       }
+    },
+    mute () {
+      this.muted 
+        ? this.$store.dispatch('audio/mute')
+        : this.$store.dispatch('audio/unmute')
     }
   },
   // component Lifecycle hooks
   beforeCreate () {},
   mounted () {
+    this.muted = false
+
     if (process.browser) {
       navigator.mediaDevices.getUserMedia(this.constraints)
         .then(stream => {
           this.stream = stream
           this.$refs.camera.srcObject = this.stream
           this.timeoutID = setTimeout(() => this.analyse(), 500)
+
           if (!this.$store.getters.audio.isActive()) {
             this.$store.dispatch('audio/init')
           } else {
-            this.$store.dispatch('audio/unmute')
+            this.$store.dispatch('audio/focus')
           }
         })
         .catch(error => console.log(error))
@@ -125,7 +128,7 @@ export default {
         .forEach(track => track.stop())
     }
     if (this.$store.getters.audio.isActive()) {
-      this.$store.dispatch('audio/mute')
+      this.$store.dispatch('audio/blur')
     }
   }
 }
