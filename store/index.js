@@ -44,6 +44,7 @@ export const mutations = {
   BROWSER_SET_MOBILE ({ user }, mobile) { user.browser.isMobile = mobile },
   BROWSER_SET_OS ({ user }, OS) { user.browser.OS = OS },
   // --- CSSGram filter
+  FILTER_RESET ({ filter }) { filter.active = 0 },
   FILTER_NEXT ({ filter }) { filter.active = ++filter.active % filter.list.length },
   FILTER_PREV ({ filter }) { filter.active = (--filter.active + filter.list.length) % filter.list.length },
   // --- Client image feed
@@ -93,6 +94,14 @@ export const actions = {
   'audio/nextPreset' ({ dispatch }) {
     if (AudioEngine.isActive())
       AudioEngine.nextPreset()
+  },
+  'audio/resetPreset' ({ dispatch }) {
+    if (AudioEngine.isActive())
+      AudioEngine.setPreset(0)
+  },
+  'audio/setPreset' ({ dispatch }, p) {
+    if (AudioEngine.isActive())
+      AudioEngine.setPreset(p)
   },
   'audio/prevPreset' ({ dispatch }) {
     if (AudioEngine.isActive())
@@ -144,6 +153,7 @@ export const actions = {
         dispatch('socket/event', event)
         break
       case 'upload':
+        console.log(data.img.preset)
         event = { type: 'upload', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
         commit('LOG_PHOTO_UPLOAD')
         commit('LOG_TIMELINE_PUSH', event)

@@ -61,9 +61,7 @@ export default {
     this._effects.updatePreset(this._preset)
   },
   setPreset (p) {
-    this._preset = p < 0
-      ? (p + presets.length) % presets.length 
-      : p % presets.length
+    this._preset = p
     this._synth.updatePreset(this._preset)
     this._effects.updatePreset(this._preset)
   },

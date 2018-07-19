@@ -7,7 +7,7 @@
 
     <template v-for="(img, i) in $store.state.feed">
       <v-flex xs12 :key="i" class="image-container">
-        <figure :class="img.class" @click="zoom(i)">
+        <figure :class="img.class" @click="sonify(i, img)">
           <img :src="img.base64" :class="zoomed === i ? 'zoom' : ''" >
         </figure>
       </v-flex>
@@ -17,6 +17,8 @@
 
 <script>
 import PictoFeedControls from '~/components/PictoFeed/Controls'
+
+import analyseImage from '~/assets/js/image/analyse'
 
 export default {
   // Do not forget this little guy
@@ -42,10 +44,21 @@ export default {
   // methods
   watch: {},
   methods: {
-    zoom (i) {
-      this.zoomed = i === this.zoomed
-        ? -1
-        : i
+    sonify (i, img) {
+      if (i !== this.zoomed) {
+        this.zoomed = i
+
+        setTimeout(() => {
+          const rgb = analyseImage(document.querySelector('.zoom'))
+          
+          this.$store.dispatch('audio/setPreset', img.preset)
+          this.$store.dispatch('audio/rgb', rgb)
+          this.$store.dispatch('audio/focus')
+        }, 50)
+      } else {
+        this.zoomed = -1
+        this.$store.dispatch('audio/blur')
+      }
     }
   },
   // component Lifecycle hooks
@@ -67,7 +80,7 @@ export default {
   width: 100vw;
 }
 
-#picto-feed > .image-container .zoom {
+.zoom {
   transform: scale(1.2);
 }
 </style>

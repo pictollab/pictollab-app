@@ -46,11 +46,13 @@ export default {
   watch: {},
   methods: {
     accept () {
+      console.log(this.$store.state.filter.active)
       this.$store.dispatch('log/event', {
         type: 'upload',
         img: {
           base64: this.$refs.canvas.toDataURL(),
-          class: this.$store.getters.filter
+          class: this.$store.getters.filter,
+          preset: this.$store.state.filter.active
         }
       })
       this.$emit('close')

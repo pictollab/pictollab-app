@@ -102,6 +102,8 @@ export default {
   mounted () {
     this.muted = false
 
+    this.$store.commit('FILTER_RESET')
+
     if (process.browser) {
       navigator.mediaDevices.getUserMedia(this.constraints)
         .then(stream => {
@@ -112,6 +114,7 @@ export default {
           if (!this.$store.getters.audio.isActive()) {
             this.$store.dispatch('audio/init')
           } else {
+            this.$store.dispatch('audio/resetPreset')
             this.$store.dispatch('audio/focus')
           }
         })
