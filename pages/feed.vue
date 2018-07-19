@@ -7,8 +7,8 @@
 
     <template v-for="(img, i) in $store.state.feed">
       <v-flex xs12 :key="i" class="image-container">
-        <figure :class="img.class">
-          <img :src="img.base64">
+        <figure :class="img.class" @click="zoom(i)">
+          <img :src="img.base64" :class="zoomed === i ? 'zoom' : ''" >
         </figure>
       </v-flex>
     </template>
@@ -30,7 +30,8 @@ export default {
   // variables
   data () {
     return {
-      muted: false
+      muted: false,
+      zoomed: -1
     }
   },
   computed: {},
@@ -40,7 +41,13 @@ export default {
   },
   // methods
   watch: {},
-  methods: {},
+  methods: {
+    zoom (i) {
+      this.zoomed = i === this.zoomed
+        ? -1
+        : i
+    }
+  },
   // component Lifecycle hooks
   beforeCreate () {},
   mounted () {}
@@ -56,6 +63,11 @@ export default {
 #picto-feed > .image-container img {
   height: 100vh;
   object-fit: cover;
+  transition: transform .2s;
   width: 100vw;
+}
+
+#picto-feed > .image-container .zoom {
+  transform: scale(1.2);
 }
 </style>
