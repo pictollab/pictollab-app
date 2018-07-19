@@ -60,6 +60,13 @@ export default {
     this._synth.updatePreset(this._preset)
     this._effects.updatePreset(this._preset)
   },
+  setPreset (p) {
+    this._preset = p < 0
+      ? (p + presets.length) % presets.length 
+      : p % presets.length
+    this._synth.updatePreset(this._preset)
+    this._effects.updatePreset(this._preset)
+  },
   mapRGB (rgb) {
     const { r, g ,b } = rgb
     const sorted = ObjectSort.largest(rgb)
