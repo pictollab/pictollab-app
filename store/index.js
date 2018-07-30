@@ -50,7 +50,7 @@ export const mutations = {
   // --- Client image feed
   FEED_PUSH ({ feed }, data) { feed.push(data) },
   // --- Client event log
-  LOG_TIMELINE_PUSH ({ log }, data) { log.timeline.push(Object.assign({ timestamp: Date.now() - log.stats.connectionTime }, data)) },
+  LOG_TIMELINE_PUSH ({ log }, data) { log.timeline.push(Object.assign({ timestamp: Date.now() }, data)) },
   LOG_PAGE_VISIT ({ log }, page) { log.stats.pageVisits[page]++ },
   LOG_PHOTO_CAPTURE ({ log }) { log.stats.interactions.photo.captured++ },
   LOG_PHOTO_UPLOAD ({ log }) { log.stats.interactions.photo.uploaded++ },
@@ -134,7 +134,7 @@ export const actions = {
     let event
     switch (data.type) {
       case 'capture':
-        event = { type: 'capture', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
+        event = { type: 'capture', data: null, timestamp: { client: Date.now() } }
         commit('LOG_PHOTO_CAPTURE')
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/event', event)
@@ -142,23 +142,23 @@ export const actions = {
       case 'connect':
         const { user } = state
         const { browser, id } = user
-        event = { type: 'connect', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
+        event = { type: 'connect', data: null, timestamp: { client: Date.now() } }
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/register', { browser, id, log: [] })
         break
       case 'nav':
-        event = { type: 'nav', data: data.to, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
+        event = { type: 'nav', data: data.to, timestamp: { client: Date.now() } }
         commit('LOG_PAGE_VISIT', data.to)
         commit('LOG_TIMELINE_PUSH', event)
         dispatch('socket/event', event)
         break
       case 'upload':
         console.log(data.img.preset)
-        event = { type: 'upload', data: null, timestamp: { client: Date.now() - state.log.stats.connectionTime } }
+        event = { type: 'upload', data: data.img, timestamp: { client: Date.now() } }
         commit('LOG_PHOTO_UPLOAD')
         commit('LOG_TIMELINE_PUSH', event)
         commit('FEED_PUSH', data.img)
-        dispatch('socket/upload', data.img)
+        dispatch('socket/upload', event)
         break
     }
   }
