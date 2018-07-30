@@ -8,7 +8,7 @@
     </v-dialog>
 
     <div :class="$store.getters.filter">
-      <video ref="camera" autoplay muted/>
+      <video ref="camera" autoplay muted playsinline/>
     </div>
 
     <picto-app-controls
