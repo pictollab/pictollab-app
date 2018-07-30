@@ -154,7 +154,7 @@ export const actions = {
         break
       case 'upload':
         console.log(data.img.preset)
-        event = { type: 'upload', data: data.img, timestamp: { client: Date.now() } }
+        event = { type: 'upload', data: data.img, timestamp: { client: Date.now(), server: null } }
         commit('LOG_PHOTO_UPLOAD')
         commit('LOG_TIMELINE_PUSH', event)
         commit('FEED_PUSH', data.img)
