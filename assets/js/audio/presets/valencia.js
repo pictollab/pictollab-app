@@ -25,12 +25,12 @@ export default {
       delayTime: 0.03, 
       feedback: 0.5 
   }},
-  { type: 'Vibrato', params: {
-      wet: 1, 
-      frequency: 2.3, 
-      depth: 0.4, 
-      type: 'triangle'
-  }},
+  // { type: 'Vibrato', params: {
+  //     wet: 1, 
+  //     frequency: 2.3, 
+  //     depth: 0.4, 
+  //     type: 'triangle'
+  // }},
   { type: 'Chorus', params: { 
       wet: 0.3,
       delayTime: 3.5,
@@ -38,11 +38,11 @@ export default {
       spread: 180,
       type: 'sine' 
   }},
-  { type: 'FeedbackDelay', params: {
-      wet: 0.7,
-      delayTime: '8n', 
-      feedback: 0.4
-  }},
+  // { type: 'FeedbackDelay', params: {
+  //     wet: 0.7,
+  //     delayTime: '8n', 
+  //     feedback: 0.4
+  // }},
   { type: 'Freeverb', params: {
       wet: 1,
       roomSize: 0.95,
