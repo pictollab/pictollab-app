@@ -23,12 +23,12 @@ export default {
   },
   unmute () { 
     this._muted = false
-    this._output.gain.linearRampToValueAtTime(0.75, this._context.currentTime + 0.1) 
+    this._output.gain.linearRampToValueAtTime(0.5, this._context.currentTime + 0.1) 
   },
   pause () { this._context.suspend() },
   resume () { this._context.resume() },
   blur () { this._output.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1)  },
-  focus () { this._output.gain.linearRampToValueAtTime(0.75, this._context.currentTime + 0.1) },
+  focus () { this._output.gain.linearRampToValueAtTime(0.5, this._context.currentTime + 0.1) },
   isActive () { return this._active },
   isMuted () { return this._muted },
   init () {
