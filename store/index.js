@@ -34,7 +34,8 @@ export const state = () => ({
       OS: ''
     },
     id: null
-  }
+  },
+  version: '0.9.0'
 })
 
 export const mutations = {

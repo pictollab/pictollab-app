@@ -7,6 +7,7 @@
             <h2>About the Project</h2>
           </v-card-title>
           <v-card-text>
+            <p>Version: {{ $store.state.version }}</p>
             <p>Welcome to Pictollab, an application developed at Queen Mary, University of
             London exploring the uses of a process called image sonification in everyday
             creativity. You are invited to use the application for as little or as long as
