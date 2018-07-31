@@ -43,7 +43,7 @@ export default {
   //     delayTime: '8n', 
   //     feedback: 0.4
   // }},
-  { type: 'Freeverb', params: {
+  { type: 'JCReverb', params: {
       wet: 1,
       roomSize: 0.95,
       dampening: 1200
