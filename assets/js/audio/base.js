@@ -11,6 +11,7 @@ export default {
   _active: false,
   _context: null,
   _output: null,
+  _master: null,
   _preset: 0,
   _synth: null,
   _effects: null,
@@ -19,25 +20,29 @@ export default {
   // --- Public Methods
   mute () { 
     this._muted = true
-    this._output.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1) 
+    this._master.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1) 
   },
   unmute () { 
     this._muted = false
-    this._output.gain.linearRampToValueAtTime(0.5, this._context.currentTime + 0.1) 
+    this._master.gain.linearRampToValueAtTime(0.5, this._context.currentTime + 0.1) 
   },
   pause () { this._context.suspend() },
   resume () { this._context.resume() },
-  blur () { this._output.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1)  },
-  focus () { this._output.gain.linearRampToValueAtTime(0.5, this._context.currentTime + 0.1) },
+  blur () { this._master.gain.linearRampToValueAtTime(0, this._context.currentTime + 0.1)  },
+  focus () { this._master.gain.linearRampToValueAtTime(0.5, this._context.currentTime + 0.1) },
   isActive () { return this._active },
   isMuted () { return this._muted },
   init () {
     this._tone = new Tone()
     this._context = this._tone.context
 
+    this._master = this._context.createGain()
+    this._master.gain.value = 0.5
+    this._master.connect(this._context.destination)
+
     this._output = this._context.createGain()
     this._output.gain.value = 0.5
-    this._output.connect(this._context.destination)
+    this._output.connect(this._master)
 
     this._synth = synth
     this._synth.init(this._context)
@@ -68,7 +73,7 @@ export default {
   mapRGB (rgb) {
     const { r, g ,b } = rgb
     const sorted = ObjectSort.largest(rgb)
-    const gain = [ r / 255, r / 255, g / 255, b / 255 ]
+    const gain = ((r / 255) + (g / 255) + (b / 255)) / 3
     const chord = sorted[0] === 'brightness'
       ? sorted[1] === 'r'
         ? 0
@@ -81,7 +86,7 @@ export default {
           ? 1
           : 2
 
-    this._synth.updateGain(gain)
+    this._output.linearRampToValueAtTime(gain, this._context.currentTime + 0.9)
     this._synth.updateNote(chord)
   }
 }
